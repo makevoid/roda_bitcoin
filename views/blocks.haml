@@ -1,5 +1,24 @@
 :ruby
   w = wallet.dev
-  infos = w.walletinfo
+  infos = w.getinfo # w.getblockchaininfo
+  #
+  block_count = w.getblockcount
+  hash = w.getblockhash block_count
+  txs  = w.getblock hash
 
 %h2 Blocks
+
+%h3 Latest: (#{block_count}) #{hash}
+
+%p Debug (get_blokchain_info rpc method):
+- for name, info in infos
+  %p #{name}: #{info}
+
+%h3 Transactions
+- for name, tx in txs
+  %p #{name}: #{tx}
+
+
+
+
+-# txs = w.listsinceblock

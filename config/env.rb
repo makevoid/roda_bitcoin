@@ -10,21 +10,19 @@ RPC_HOST = '188.165.223.5' # sys.mkvd.net
 # RPC_HOST = '212.47.233.106' # bchain  # scaleway
 # RPC_HOST = 'localhost'
 
-# bchain2 # scalet
-# bitcoin_conf = "sys.bitcoin.conf"
-bitcoin_conf = "bitcoin.conf"
 
+read = -> (path) { File.read File.expand_path path }
 
-unless APP_ENV == "development"
-  file = File.read File.expand_path( "~/.bitcoin/#{bitcoin_conf}" )
-  password = file.strip.match(/rpcpassword=(.+)/)[1]
+password = if APP_ENV == "development"
+  path = "~/.sys.bitcoin.conf.pw"
+  read.( path )
 else
-  password = File.read( File.expand_path "#{APP_PATH}/.bitcoin_rpc_password" ).strip
+  path = "~/.bitcoin/bitcoin.conf"
+  file = read.( path )
+  file.strip.match(/rpcpassword=(.+)/)[1]
 end
 
-# password = "antani" # temp dev pass lol
-
-RPC_PASSWORD = password
+RPC_PASSWORD = password.strip
 
 
 # models

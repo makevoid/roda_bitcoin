@@ -46,12 +46,10 @@ class Wallet
   end
 
   if APP_ENV == "development"
+    # shortcircuit api
+
     def dev
       @client
-    end
-
-    def asd
-
     end
   end
 
