@@ -1,15 +1,16 @@
+require 'tilt/haml'
 require_relative 'config/env'
 
 class App < Roda
-
   plugin(:assets,
     css: ["style.css"],
-    js:  ["vendor/underscore.js", "vendor/qrcode.js"],
+    js:  ["vendor/zepto.js", "vendor/underscore.js", "vendor/qrcode.js"],
   )
 
   plugin :render, engine: "haml"
   plugin :partials
   plugin :not_found
+  # plugin :content_for
 
   # TODO: move in helpers
 
@@ -37,6 +38,10 @@ class App < Roda
     request.path.split("/")[1]
   end
 
+  def js_void
+    "javascript:void(0)"
+  end
+
   def table_row(text, colspan: 5)
     haml_tag(:tr) do
       haml_tag(:td, colspan: colspan) do
@@ -45,7 +50,17 @@ class App < Roda
     end
   end
 
+  def content_for(key, &block)
+    if block
+      @content_for ||= {}
+      @content_for[key] = yield
+    else
+      @content_for && @content_for[key]
+    end
+  end
+
   route do |r|
+    @time = Time.now
 
     r.root do
       r.redirect "/blocks"
@@ -65,6 +80,27 @@ class App < Roda
           end
         end
       end
+    end
+
+    # all BC gets will be public, otherwise add if APP_ENV=="development"
+    r.on "cache" do
+      r.is do
+        r.get do
+          view "cache"
+        end
+      end
+
+      redis = Redis.new
+
+      r.on ":id" do |id|
+        r.is do
+          r.get do
+            json_route
+            { value: redis.get(id) }.to_json
+          end
+        end
+      end
+
     end
 
     r.assets

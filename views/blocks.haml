@@ -6,19 +6,20 @@
   hash = w.getblockhash block_count
   txs  = w.getblock hash
 
-%h2 Blocks
+%h2
+  Blocks
+  %h3 Latest: (#{block_count}) #{hash}
 
-%h3 Latest: (#{block_count}) #{hash}
+  %p Debug (get_blokchain_info rpc method):
+  - for name, info in infos
+    %p #{name}: #{info}
 
-%p Debug (get_blokchain_info rpc method):
-- for name, info in infos
-  %p #{name}: #{info}
-
-%h3 Transactions
-- for name, tx in txs
-  %p #{name}: #{tx}
+  %h3 Transactions
+  - for name, tx in txs
+    %p #{name}: #{tx}
 
 
 
+%p page rendering time: #{Time.now - @time}
 
 -# txs = w.listsinceblock

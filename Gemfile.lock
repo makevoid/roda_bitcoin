@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/makevoid/bitcoin-client.git
-  revision: a48e4f7baf21ffcb732c34d442648227ad133f96
+  revision: a25722a319f338c8fa800d5f8457c619e0466124
   specs:
     bitcoin-client (0.0.3)
       rest-client
@@ -8,7 +8,6 @@ GIT
 GEM
   remote: http://rubygems.org/
   specs:
-    byebug (6.0.2)
     domain_name (0.5.25)
       unf (>= 0.0.5, < 1.0.0)
     haml (4.0.7)
@@ -35,7 +34,6 @@ PLATFORMS
 
 DEPENDENCIES
   bitcoin-client!
-  byebug
   haml
   redis
   roda

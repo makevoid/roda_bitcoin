@@ -1,5 +1,5 @@
 class Transaction
-  attr_reader :account, :address, :category, :amount, :vout, :confirmations, :blockhash, :blockindex, :blocktime, :txid, :walletconflicts, :time, :timereceived
+  attr_reader :account, :address, :category, :amount, :vout, :confirmations, :blockhash, :blockindex, :blocktime, :txid, :conflicts, :time, :timereceived
 
   def initialize(account:, address:, category:, amount:, vout:, confirmations:, blockhash:, blockindex:, blocktime:, txid:, walletconflicts:, time:, timereceived:)
     @account = account
@@ -7,12 +7,12 @@ class Transaction
     @category = category
     @amount = amount
     @vout = vout
-    @confirmations = confirmations
-    @blockhash = blockhash
-    @blockindex = blockindex
-    @blocktime = blocktime
-    @txid = txid
-    @walletconflicts = walletconflicts
+    @confirmations  = confirmations
+    @blockhash      = blockhash
+    @blockindex     = blockindex
+    @blocktime      = blocktime
+    @txid           = txid
+    @conflicts = walletconflicts
     @time = time
     @timereceived = timereceived
   end
